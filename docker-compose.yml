@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: cinema_postgres
+    environment:
+      POSTGRES_DB: cinema
+      POSTGRES_USER: cinema_user
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-cinema_pass}
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cinema_user -d cinema"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - cinema_network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cinema_app
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/cinema
+      SPRING_DATASOURCE_USERNAME: cinema_user
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-cinema_pass}
+      SPRING_JPA_HIBERNATE_DDL_AUTO: validate
+      SPRING_FLYWAY_ENABLED: true
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - cinema_network
+
+volumes:
+  postgres_data:
+
+networks:
+  cinema_network:
+    driver: bridge
