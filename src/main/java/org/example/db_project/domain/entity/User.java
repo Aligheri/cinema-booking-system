@@ -56,14 +56,6 @@ public class User {
         updatedAt = OffsetDateTime.now();
     }
 
-    public void softDelete() {
-        this.deletedAt = OffsetDateTime.now();
-    }
-
-    public boolean isDeleted() {
-        return deletedAt != null;
-    }
-
     public String getFullName() {
         return firstName + " " + lastName;
     }

@@ -11,7 +11,6 @@ import java.util.Optional;
 
 @Repository
 public interface HallRepository extends JpaRepository<Hall, Long> {
-    Optional<Hall> findByName(String name);
 
     @Query(value = """
             SELECT h.* FROM halls h

@@ -32,13 +32,4 @@ public class Hall {
     @Builder.Default
     private List<Session> sessions = new ArrayList<>();
 
-    public void addSeat(Seat seat) {
-        seats.add(seat);
-        seat.setHall(this);
-    }
-
-    public void removeSeat(Seat seat) {
-        seats.remove(seat);
-        seat.setHall(null);
-    }
 }

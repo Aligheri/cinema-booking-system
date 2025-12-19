@@ -27,7 +27,6 @@ public class SessionService {
     private final SessionRepository sessionRepository;
     private final MovieRepository movieRepository;
     private final HallRepository hallRepository;
-    private final MovieService movieService;
     private final HallService hallService;
     private final SeatService seatService;
 

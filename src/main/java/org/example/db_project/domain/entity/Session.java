@@ -56,8 +56,4 @@ public class Session {
     public boolean hasStarted() {
         return OffsetDateTime.now().isAfter(startTime);
     }
-
-    public boolean hasEnded() {
-        return OffsetDateTime.now().isAfter(endTime);
-    }
 }
